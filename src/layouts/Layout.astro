@@ -1,0 +1,105 @@
+---
+// Shared layout for every page. Defines the header (logo, nav, book a
+// demo button) and footer exactly once. Pages pass a title, description,
+// and which nav item is active.
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  active?: 'pricing' | 'whitepaper' | 'demo';
+}
+const { title, description, active }: Props = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="container">
+    <nav class="nav">
+      <Logo variant="header" />
+      <div class="nav-links" id="navLinks">
+        <a href="/pricing" class={active === 'pricing' ? 'active' : undefined}>Pricing</a>
+        <a href="/whitepaper" class={active === 'whitepaper' ? 'active' : undefined}>White paper</a>
+        <a href="/demo" class={active === 'demo' ? 'active' : undefined}>Demo</a>
+      </div>
+      <div class="nav-spacer"></div>
+      <div class="nav-cta">
+        <a href="/demo" class="btn btn-primary">Book a demo</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<slot />
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <Logo variant="footer" />
+        <p class="footer-blurb">Built on Peel Signal Theory.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <!-- Phase 2: contact, privacy, and terms pages are deferred -->
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/whitepaper">White paper</a></li>
+        </ul>
+      </div>
+      <div class="footer-signup">
+        <label for="footerEmail">Stay in the loop</label>
+        <p>Occasional notes on continuous improvement. No spam.</p>
+        <form class="signup-row" id="signupForm" novalidate>
+          <input id="footerEmail" type="email" placeholder="you@company.com" required />
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Cycle1924. All rights reserved.</span>
+      <span>Continuous improvement, operationalized.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const tgl = document.getElementById('navToggle');
+  const lnk = document.getElementById('navLinks');
+  if (tgl && lnk) tgl.addEventListener('click', () => lnk.classList.toggle('open'));
+
+  // Newsletter signup. Phase 2 will wire this to a real list; for now we
+  // intercept the submit and confirm inline so the site demos cleanly.
+  const signup = document.getElementById('signupForm') as HTMLFormElement | null;
+  if (signup) {
+    signup.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!signup.checkValidity()) { signup.reportValidity(); return; }
+      signup.innerHTML = '<p class="signup-success">Thanks. You are on the list.</p>';
+    });
+  }
+</script>
+</body>
+</html>

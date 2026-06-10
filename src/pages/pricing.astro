@@ -1,0 +1,236 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Comparison grid is data driven. To update tiers or rows later, edit these
+// two arrays only. The order of cells in each row matches the order of tiers.
+type Cell =
+  | { kind: 'price'; amount: string; per: string }
+  | { kind: 'priceText'; text: string }
+  | { kind: 'tbd' }
+  | { kind: 'included' }
+  | { kind: 'custom' };
+
+interface Tier {
+  name: string;
+  highlight: boolean;
+  badge?: string;
+  cta: { label: string; variant: 'btn-primary' | 'btn-secondary' };
+}
+
+interface Row {
+  label: string;
+  italic?: boolean;
+  isPrice?: boolean;
+  cells: Cell[];
+}
+
+const tiers: Tier[] = [
+  { name: 'Foundation', highlight: false, cta: { label: 'Book a demo', variant: 'btn-secondary' } },
+  { name: 'Standard', highlight: true, badge: 'Most popular', cta: { label: 'Book a demo', variant: 'btn-primary' } },
+  { name: 'Enterprise', highlight: false, cta: { label: 'Contact sales', variant: 'btn-secondary' } },
+];
+
+const rows: Row[] = [
+  { label: 'Price', isPrice: true, cells: [
+    { kind: 'price', amount: '$30K', per: '/yr' },
+    { kind: 'price', amount: '$72K', per: '/yr' },
+    { kind: 'priceText', text: 'Contact sales' },
+  ] },
+  { label: 'Lifecycles included', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'custom' }] },
+  { label: 'Users', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'custom' }] },
+  { label: 'All seven signal types', cells: [{ kind: 'included' }, { kind: 'included' }, { kind: 'included' }] },
+  { label: 'AI-guided root cause analysis', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
+  { label: 'Data source connections', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
+  { label: 'Reporting and dashboards', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
+  { label: 'Support level', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
+  { label: 'Feature to be defined', italic: true, cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
+  { label: 'Feature to be defined', italic: true, cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
+];
+
+const faqs = [
+  { q: 'What is a lifecycle?', a: "A lifecycle is one complete improvement loop in Cycle1924, from a signal surfacing an issue, through root cause, to a verified fix. We'll finalize the exact definition with you before launch.", open: true },
+  { q: 'Do we need continuous improvement experience?', a: 'No. Cycle1924 is built for teams without CI training. The method is in the platform.', open: false },
+  { q: 'What systems does it connect to?', a: 'Cycle1924 connects to the common systems mid-market operations already run on: ERP, MES, spreadsheets, and BI tools among them. The full connector list is being finalized.', open: false },
+  { q: 'How long does implementation take?', a: 'Implementation is scoped to your operation by a certified consultant. Typical timelines will be confirmed during your demo.', open: false },
+];
+---
+<Layout
+  title="Pricing: Cycle1924"
+  description="Tiers are based on the number of lifecycles you manage in Cycle1924. Every tier includes all seven signal types. Implementation services are scoped and quoted separately."
+  active="pricing"
+>
+
+<section class="pricing-hero">
+  <div class="container">
+    <div class="inner">
+      <span class="eyebrow">Pricing</span>
+      <h1>Pricing built for growth.</h1>
+      <p class="lead maxw-prose mx-auto">Tiers are based on the number of lifecycles you manage in Cycle1924. Every tier includes all seven signal types. Implementation services are scoped and quoted separately.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="compare-wrap">
+    <table class="compare">
+      <thead>
+        <tr>
+          <th class="rowlabel"></th>
+          {tiers.map((tier) => (
+            <th class={tier.highlight ? 'col-std' : undefined}>
+              {tier.badge && <span class="badge-sm">{tier.badge}</span>}
+              <div class="tier-name">{tier.name}</div>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr class={row.isPrice ? 'row-price' : undefined}>
+            <th class="rowlabel">
+              {row.italic ? <span class="muted feature-tbd">{row.label}</span> : row.label}
+            </th>
+            {row.cells.map((cell, i) => (
+              <td class={tiers[i].highlight ? 'col-std' : undefined}>
+                {cell.kind === 'price' && <span class="cell-price">{cell.amount}<span class="per">{cell.per}</span></span>}
+                {cell.kind === 'priceText' && <span class="cell-price">{cell.text}</span>}
+                {cell.kind === 'tbd' && <span class="cell-tbd">TBD</span>}
+                {cell.kind === 'custom' && <span class="cell-custom">Custom</span>}
+                {cell.kind === 'included' && (
+                  <span class="cell-inc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Included</span>
+                )}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="rowlabel"></td>
+          {tiers.map((tier) => (
+            <td class={tier.highlight ? 'col-std' : undefined}>
+              <a class={`btn ${tier.cta.variant}`} href="/demo">{tier.cta.label}</a>
+            </td>
+          ))}
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="impl-note">
+    <span class="ico">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    </span>
+    <div>
+      <h3>Implementation</h3>
+      <p>Every Cycle1924 deployment includes hands-on implementation by a certified consultant. Implementation is scoped to your operation and quoted separately from your subscription.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-tight container">
+  <div class="faq">
+    <h2>Questions, answered.</h2>
+    {faqs.map((item) => (
+      <details class="faq-item" open={item.open}>
+        <summary class="faq-q">{item.q}
+          <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </summary>
+        <div class="faq-a">{item.a}</div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="section-tight container">
+  <div class="cta-band">
+    <h2>See it on your own data. Book a demo.</h2>
+    <a href="/demo" class="btn btn-primary btn-lg">Book a demo <span class="arrow">→</span></a>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  .pricing-hero { background: linear-gradient(180deg, var(--color-white) 0%, var(--color-bg-neutral) 100%); border-bottom: 1px solid var(--color-border); }
+  .pricing-hero .inner { text-align: center; max-width: 60ch; margin-inline: auto; padding-block: var(--pad-pricing-hero); }
+  .pricing-hero h1 { margin: var(--space-16) 0 var(--space-18); }
+  .pricing-hero .lead { margin-inline: auto; }
+
+  /* Comparison table */
+  .compare-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
+    -webkit-overflow-scrolling: touch;
+  }
+  .compare { width: 100%; border-collapse: collapse; min-width: 800px; background: var(--color-white); }
+  .compare th, .compare td {
+    padding: var(--space-15) var(--space-22);
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+    font-size: var(--fs-096);
+  }
+  .compare tfoot td, .compare tfoot th { border-bottom: none; }
+  .compare .rowlabel { text-align: left; font-weight: var(--fw-semibold); color: var(--color-text); width: 30%; }
+  .compare tbody .rowlabel { font-weight: var(--fw-medium); color: var(--color-text-muted); }
+  .compare thead th { background: var(--color-bg-neutral); vertical-align: bottom; padding-top: var(--space-26); padding-bottom: var(--space-22); }
+  .compare thead .rowlabel { background: var(--color-bg-neutral); }
+  .compare .tier-name { font-size: var(--fs-118); font-weight: var(--fw-extrabold); letter-spacing: var(--ls-tight-3); }
+  .compare .col-std { background: var(--color-accent-soft); }
+  .compare thead .col-std { box-shadow: inset 0 3px 0 var(--color-accent); }
+  .badge-sm {
+    display: inline-block; margin-bottom: var(--space-9);
+    background: var(--color-accent); color: var(--color-white);
+    font-size: var(--fs-068); font-weight: var(--fw-bold); letter-spacing: var(--ls-wide-3); text-transform: uppercase;
+    padding: var(--space-4) var(--space-11); border-radius: var(--r-pill);
+  }
+  .feature-tbd { font-style: italic; }
+  .row-price td, .row-price th { padding-top: var(--space-18); padding-bottom: var(--space-18); }
+  .cell-price { font-size: var(--fs-118); font-weight: var(--fw-extrabold); letter-spacing: var(--ls-tight-2); color: var(--color-text); }
+  .cell-price .per { font-size: var(--fs-084); font-weight: var(--fw-semibold); color: var(--color-text-muted); }
+  .cell-inc { color: var(--color-accent); font-weight: var(--fw-bold); display: inline-flex; align-items: center; gap: var(--space-7); }
+  .cell-custom { font-weight: var(--fw-bold); color: var(--color-text); }
+  .cell-tbd { color: var(--color-slate-400); font-weight: var(--fw-semibold); font-size: var(--fs-086); letter-spacing: var(--ls-wide-6); }
+  .compare tfoot td { padding-top: var(--space-22); padding-bottom: var(--space-24); }
+  .compare tfoot .btn { min-width: 150px; }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin-inline: auto; }
+  .faq h2 { text-align: center; margin-bottom: var(--space-40); }
+  .faq-item { border-bottom: 1px solid var(--color-border); }
+  .faq-q {
+    width: 100%; text-align: left; background: none; border: none;
+    padding: var(--space-24) 0; display: flex; align-items: center; gap: var(--space-16);
+    font-family: inherit; font-size: var(--fs-112); font-weight: var(--fw-bold); color: var(--color-text);
+    letter-spacing: var(--ls-tight-3);
+  }
+  .faq-q .ico { margin-left: auto; flex: none; color: var(--color-accent); transition: transform .25s ease; }
+  .faq-item[open] .faq-q .ico { transform: rotate(45deg); }
+  .faq-a { padding: 0 0 var(--space-24); color: var(--color-text-muted); max-width: 64ch; line-height: var(--lh-copy); }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+
+  /* Implementation note */
+  .impl-note {
+    display: flex; gap: var(--space-18); align-items: flex-start;
+    background: var(--color-bg-neutral); border: 1px solid var(--color-border);
+    border-radius: var(--r-lg); padding: var(--space-26) var(--space-28);
+    margin-top: var(--space-28);
+  }
+  .impl-note .ico {
+    width: 44px; height: 44px; flex: none; border-radius: var(--r-md);
+    background: var(--color-accent-soft); color: var(--color-accent);
+    display: grid; place-items: center;
+  }
+  .impl-note h3 { font-size: var(--fs-108); margin-bottom: var(--space-6); }
+  .impl-note p { color: var(--color-text-muted); max-width: 74ch; }
+  @media (max-width: 560px) { .impl-note { flex-direction: column; gap: var(--space-14); } }
+
+  /* bottom CTA */
+  .cta-band { text-align: center; }
+  .cta-band h2 { margin-bottom: var(--space-24); }
+</style>

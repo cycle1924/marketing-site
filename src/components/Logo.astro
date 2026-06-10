@@ -1,0 +1,38 @@
+---
+// Single source of truth for the Cycle1924 brand mark and wordmark.
+// Included in the shared layout's header and footer, so a future brand
+// swap touches this one file. Colors are driven by tokens (see tokens.css);
+// the "footer" variant uses the lighter palette for dark surfaces.
+interface Props {
+  variant?: 'header' | 'footer';
+}
+const { variant = 'header' }: Props = Astro.props;
+---
+<a class="brand" href="/" aria-label="Cycle1924 home">
+  <span class="mark">
+    <svg class={`orbit orbit--${variant}`} width="26" height="26" viewBox="0 0 32 32" fill="none">
+      <circle class="ring-outer" cx="16" cy="16" r="13.5" stroke-width="1.5" />
+      <circle class="ring-inner" cx="16" cy="16" r="7.5" stroke-width="1.5" />
+      <circle class="core" cx="16" cy="16" r="2.6" />
+      <circle class="dot-a" cx="29.5" cy="16" r="2.4" />
+      <circle class="dot-b" cx="8.5" cy="16" r="1.8" />
+    </svg>
+  </span>
+  <span class="word"><b>Cycle</b><span>1924</span></span>
+</a>
+
+<style>
+  /* Header variant: brand mark on light surfaces. */
+  .orbit--header .ring-outer { stroke: var(--color-slate-300); }
+  .orbit--header .ring-inner { stroke: var(--color-slate-400); }
+  .orbit--header .core { fill: var(--color-accent); }
+  .orbit--header .dot-a { fill: var(--color-text); }
+  .orbit--header .dot-b { fill: var(--color-accent); }
+
+  /* Footer variant: lighter palette for the dark footer surface. */
+  .orbit--footer .ring-outer { stroke: var(--color-slate-600); }
+  .orbit--footer .ring-inner { stroke: var(--color-text-muted); }
+  .orbit--footer .core { fill: var(--color-accent-light); }
+  .orbit--footer .dot-a { fill: var(--color-border); }
+  .orbit--footer .dot-b { fill: var(--color-accent-light); }
+</style>
