@@ -14,6 +14,19 @@ npm run build # build the static site to dist/
 
 `npm run preview` serves the built `dist/` output locally.
 
+## Deploy
+
+The site deploys to Railway as a static site, built from the `main` branch.
+Configuration lives in `railway.json`:
+
+- Build command: `npm run build` (produces the static `dist/` output).
+- Start command: `npm run start` (serves `dist/` with the `serve` package on
+  `0.0.0.0` and the `PORT` Railway provides). This is a multi-page site, so
+  single-page-app mode is off and unknown paths return a 404.
+
+Custom domains are configured in the Railway service settings, not in this
+repository.
+
 ## Design tokens
 
 All color, type, spacing, radius, shadow, and layout values live as CSS
