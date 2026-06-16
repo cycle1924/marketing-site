@@ -1,7 +1,7 @@
 /* ============================================================
-   Cycle1924 design tokens
+   PeelForward design tokens
    Single source of truth for color, type, spacing, radius,
-   shadow, and layout values extracted from the design export.
+   shadow, and layout values for the Peel brand.
 
    Every hardcoded value lives here. No other file should
    contain a raw hex color. The accent color is named
@@ -10,24 +10,33 @@
    ============================================================ */
 
 :root {
-  /* ---------- Color: brand / accent (swappable) ---------- */
-  --color-accent:            #3b82f6;  /* primary accent */
-  --color-accent-hover:      #2563eb;  /* darker accent on hover */
-  --color-accent-soft:       #eff6ff;  /* tinted accent surface */
-  --color-accent-light:      #93c5fd;  /* accent on dark surfaces */
-  --color-accent-glow:       rgba(59, 130, 246, 0.35);  /* radial glow on dark callout */
-  --color-accent-glow-soft:  rgba(59, 130, 246, 0.4);   /* radial glow on doc cover */
+  /* ---------- Brand palette ---------- */
+  --color-black:  #000000;
+  --color-navy:   #064C72;  /* primary dark surface */
+  --color-sky:    #8DC2E9;
+  --color-teal:   #026C80;
+  --color-sage:   #8DB4AD;
+  --color-sand:   #EDD9A4;
 
-  /* ---------- Color: neutral / slate scale ---------- */
-  --color-ink-900:     #0f172a;  /* near black, deep surfaces */
-  --color-text:        #1e293b;  /* primary text, dark slate */
-  --color-slate-600:   #475569;  /* footer logo ring */
-  --color-text-muted:  #64748b;  /* secondary text */
-  --color-slate-400:   #94a3b8;  /* muted icons and placeholders */
-  --color-slate-300:   #cbd5e1;  /* input border, arrows, muted days */
-  --color-border:      #e2e8f0;  /* dividers */
-  --color-bg-neutral-2: #f1f5f9; /* deeper neutral surface */
-  --color-bg-neutral:  #f8fafc;  /* cards and alt sections */
+  /* ---------- Color: brand / accent (swappable) ---------- */
+  --color-accent:            #ED6335;  /* Peel orange, rest state */
+  --color-accent-hover:      color-mix(in srgb, var(--color-accent) 88%, var(--color-black));  /* rest mixed with about 12% black */
+  --color-accent-active:     color-mix(in srgb, var(--color-accent) 80%, var(--color-black));  /* pressed, darker still */
+  --color-accent-soft:       #FCEAE1;  /* tinted accent surface */
+  --color-accent-light:      var(--color-sand);  /* secondary accent on dark surfaces */
+  --color-accent-glow:       rgba(237, 99, 53, 0.32);  /* radial glow on dark callout */
+  --color-accent-glow-soft:  rgba(237, 99, 53, 0.40);  /* radial glow on doc cover */
+
+  /* ---------- Color: neutral / navy-tinted scale ---------- */
+  --color-ink-900:     var(--color-navy);  /* deep navy surfaces: footer, pricing band */
+  --color-text:        var(--color-navy);  /* primary text and headings */
+  --color-slate-600:   #3A6B86;  /* deep muted navy */
+  --color-text-muted:  #5C7382;  /* secondary text */
+  --color-slate-400:   #93A7B3;  /* muted icons and placeholders */
+  --color-slate-300:   #C2D2DC;  /* input border, arrows, muted days */
+  --color-border:      #E8E3D7;  /* dividers, warm sand-grey */
+  --color-bg-neutral-2: #EFE7D6; /* deeper neutral surface */
+  --color-bg-neutral:  #FAF5E7;  /* cards and alt sections, warm cream */
   --color-bg:          #ffffff;  /* page background */
   --color-white:       #ffffff;  /* solid white on colored surfaces */
 
@@ -40,7 +49,7 @@
   --color-header-bg:      rgba(255, 255, 255, 0.82);  /* translucent sticky header */
 
   /* ---------- Icons that encode a color ---------- */
-  --icon-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  --icon-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235C7382' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 
   /* ---------- Type ---------- */
   --font: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;

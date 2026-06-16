@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout
-  title="The Peel Signal Theory framework: Cycle1924"
+  title="The Peel Signal Theory framework: PeelForward"
   description="Download the Peel Signal Theory framework: how seven signal types turn everyday operational data into clear direction. Written for operators, not statisticians."
   active="whitepaper"
 >
@@ -13,7 +13,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="gate-copy">
       <span class="eyebrow">Free framework</span>
       <h1>The Peel Signal Theory framework.</h1>
-      <p>The thinking behind Cycle1924: how seven signal types turn everyday operational data into clear direction. Written for operators, not statisticians.</p>
+      <p>The thinking behind PeelForward: how seven signal types turn everyday operational data into clear direction. Written for operators, not statisticians.</p>
       <ul class="gate-points">
         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>The seven signals, explained in plain language</li>
         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>How to find your true operational constraint</li>
@@ -22,9 +22,8 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="doc-preview">
         <div class="doc-cover">
-          <div class="kicker">Cycle1924 · White paper</div>
+          <div class="kicker">PeelForward · White paper</div>
           <div class="t">The Peel Signal Theory framework</div>
-          <div class="lines"><span></span><span></span><span></span><span></span></div>
         </div>
       </div>
     </div>
@@ -106,21 +105,15 @@ import Layout from '../layouts/Layout.astro';
   .gate-points li { display: flex; gap: var(--space-12); align-items: flex-start; color: var(--color-text); }
   .gate-points svg { flex: none; color: var(--color-accent); margin-top: 3px; }
 
-  /* Document preview */
+  /* White paper card: simple on-palette card, no illustration */
   .doc-preview { position: relative; margin-top: var(--space-36); max-width: 380px; }
   .doc-cover {
     background: var(--color-ink-900); color: var(--color-white);
     border-radius: var(--r-md); padding: var(--space-28);
     box-shadow: var(--shadow-lg);
-    transform: rotate(-3deg);
-    position: relative; overflow: hidden;
   }
-  .doc-cover::after { content:""; position:absolute; right:-60px; bottom:-60px; width:180px; height:180px; border-radius:var(--r-circle); background: radial-gradient(circle, var(--color-accent-glow-soft), transparent 65%); }
   .doc-cover .kicker { color:var(--color-accent-light); font-size:var(--fs-072); font-weight:var(--fw-bold); letter-spacing:var(--ls-wide); text-transform:uppercase; }
   .doc-cover .t { font-size:var(--fs-130); font-weight:var(--fw-extrabold); line-height:var(--lh-snug); margin-top:var(--space-10); }
-  .doc-cover .lines { margin-top:var(--space-22); display:grid; gap:var(--space-8); }
-  .doc-cover .lines span { height:6px; border-radius:var(--r-pill); background: var(--color-overlay-16); }
-  .doc-cover .lines span:nth-child(2){ width:80%; } .doc-cover .lines span:nth-child(3){ width:90%; } .doc-cover .lines span:nth-child(4){ width:60%; }
 
   /* Form card */
   .form-card {
