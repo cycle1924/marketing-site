@@ -1,18 +1,42 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// AI-readiness cards are data driven. To edit, add, or reorder cards later,
+// change this one array only, matching the data-driven pattern used by the
+// pricing grid.
+interface ReadinessCard {
+  title: string;
+  body: string;
+}
+
+const readinessCards: ReadinessCard[] = [
+  {
+    title: 'Acts on the answer.',
+    body: 'We do not hand you a readiness grade and walk away. PeelForward pinpoints the processes where AI genuinely fits and helps you put it to work there. For the rest, it drives continuous improvement so the whole operation moves forward, not just the AI-ready corners.',
+  },
+  {
+    title: 'Your people decide.',
+    body: 'PeelForward computes the facts and lays them out plainly. Every judgment that matters stays with your team. The platform never overrules a person and never hides how it reached a conclusion. You get clarity, not a black box.',
+  },
+  {
+    title: 'Proof, not promises.',
+    body: 'Every change is measured against where you started, so you can show the people funding the work exactly what improved and what it was worth. Readiness becomes results you can defend.',
+  },
+];
 ---
 <Layout
-  title="PeelForward: Your operating system for continuous improvement"
-  description="PeelForward connects to the systems you already use, listens to the signals in your data, and guides your team from problem to fix. A century of operational science, rebuilt with AI."
+  title="PeelForward: AI readiness for real operations"
+  description="PeelForward finds the processes where AI genuinely fits, automates those well, and drives measured continuous improvement everywhere else. The decisions stay yours."
 >
 
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="container">
     <div class="hero-copy hero-inner">
-      <span class="eyebrow">The next generation of continuous improvement</span>
-      <h1>Know what your operation is telling you.</h1>
-      <p class="lead">PeelForward connects to the systems you already use, listens to the signals in your data, and guides your team from problem to fix. A century of operational science, rebuilt with AI.</p>
+      <span class="eyebrow">AI readiness for real operations</span>
+      <h1>Put AI where it belongs.</h1>
+      <p class="reassurance">The decisions stay yours. The guesswork goes away.</p>
+      <p class="lead">Told to "make AI work," most companies scatter it across processes that were never good candidates. PeelForward finds the few where AI genuinely fits and helps you automate those well. For everything else, it drives continuous improvement and proves it worked, every change measured so you can show what it returned.</p>
       <div class="hero-actions">
         <a href="/demo" class="btn btn-primary btn-lg">Book a demo <span class="arrow">→</span></a>
         <a href="/whitepaper" class="btn btn-secondary btn-lg">Read the framework</a>
@@ -28,8 +52,26 @@ import Layout from '../layouts/Layout.astro';
   </div>
 </div>
 
+<!-- ============ AI READINESS ============ -->
+<section class="readiness section container">
+  <div class="center readiness-intro">
+    <h2>The honest answer to "are we AI ready?"</h2>
+    <p class="lead">Every leader is being asked that question. The usual answer is a score and a slide deck. PeelForward gives you something you can act on.</p>
+  </div>
+  <div class="readiness-grid">
+    {readinessCards.map((card) => (
+      <article class="readiness-card">
+        <span class="readiness-rule" aria-hidden="true"></span>
+        <h3 class="readiness-card-title">{card.title}</h3>
+        <p class="readiness-card-body">{card.body}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
 <!-- ============ HOW IT WORKS (merged flow) ============ -->
 <section class="flow-section section container">
+  <p class="flow-transition center">How it finds all of this: by listening to the signals already in your data.</p>
   <div class="center flow-intro">
     <span class="eyebrow">How it works</span>
     <h2>From the data you already have to the moves that matter.</h2>
@@ -141,7 +183,16 @@ import Layout from '../layouts/Layout.astro';
     margin-inline: auto;
   }
   .hero-copy .eyebrow { margin-bottom: var(--space-20); display: inline-block; }
-  .hero-copy h1 { margin-bottom: var(--space-22); }
+  .hero-copy h1 { margin-bottom: var(--space-14); }
+  .hero-copy .reassurance {
+    color: var(--color-navy);
+    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-tight-3);
+    line-height: var(--lh-snug);
+    margin: 0 auto var(--space-22);
+    max-width: 48ch;
+  }
   .hero-copy .lead { max-width: 56ch; margin: 0 auto var(--space-32); }
   .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-14); align-items: center; justify-content: center; }
 
@@ -158,6 +209,57 @@ import Layout from '../layouts/Layout.astro';
     letter-spacing: var(--ls-wide-5);
   }
   .heritage b { color: var(--color-text); font-weight: var(--fw-bold); }
+
+  /* ---------- AI readiness ---------- */
+  .readiness-intro { margin-bottom: var(--space-48); max-width: 64ch; margin-inline: auto; }
+  .readiness-intro h2 { margin-bottom: var(--space-16); }
+  .readiness-intro .lead { max-width: 60ch; margin-inline: auto; }
+  .readiness-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-24);
+  }
+  .readiness-card {
+    background: var(--color-navy);
+    color: var(--color-white);
+    border-radius: var(--r-xl);
+    padding: var(--space-36) var(--space-32);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+  }
+  .readiness-rule {
+    display: block;
+    width: 48px;
+    height: 4px;
+    border-radius: var(--r-pill);
+    background: var(--color-accent);
+    margin-bottom: var(--space-22);
+  }
+  .readiness-card-title {
+    color: var(--color-accent);
+    font-size: var(--fs-130);
+    font-weight: var(--fw-extrabold);
+    letter-spacing: var(--ls-tight-3);
+    margin-bottom: var(--space-16);
+  }
+  .readiness-card-body {
+    color: var(--color-white);
+    font-size: var(--fs-100);
+    line-height: var(--lh-copy);
+  }
+  @media (max-width: 860px) {
+    .readiness-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Flow transition ---------- */
+  .flow-transition {
+    color: var(--color-slate-600);
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lead);
+    max-width: 64ch;
+    margin: 0 auto var(--space-44);
+  }
 
   /* ---------- Flow diagram ---------- */
   .flow-intro { margin-bottom: var(--space-52); max-width: 64ch; margin-inline: auto; }
