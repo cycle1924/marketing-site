@@ -18,118 +18,85 @@ import Layout from '../layouts/Layout.astro';
 </section>
 
 <section class="section container">
-  <div class="demo-grid">
+  <div class="demo-col">
     <!-- Form -->
-    <div>
-      <div class="form-card" id="formCard">
-        <h2>Tell us about you</h2>
-        <form id="demoForm" novalidate>
-          <div class="field-row">
-            <div class="field">
-              <label for="fn">First name</label>
-              <input class="input" id="fn" name="firstname" type="text" placeholder="John" required />
-            </div>
-            <div class="field">
-              <label for="ln">Last name</label>
-              <input class="input" id="ln" name="lastname" type="text" placeholder="Doe" required />
-            </div>
+    <div class="form-card" id="formCard">
+      <h2>Tell us about you</h2>
+      <form id="demoForm" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="fn">First name</label>
+            <input class="input" id="fn" name="firstname" type="text" placeholder="John" required />
           </div>
           <div class="field">
-            <label for="co">Company</label>
-            <input class="input" id="co" name="company" type="text" placeholder="Acme Inc" required />
+            <label for="ln">Last name</label>
+            <input class="input" id="ln" name="lastname" type="text" placeholder="Doe" required />
           </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="em">Work email</label>
-              <input class="input" id="em" name="email" type="email" placeholder="john@example.com" required />
-            </div>
-            <div class="field">
-              <label for="ph">Phone</label>
-              <input class="input" id="ph" name="phone" type="tel" placeholder="(555) 123-4567" />
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="role">What's your role?</label>
-              <select class="select" id="role" name="jobtitle" required>
-                <option value="" disabled selected>Select your role</option>
-                <option>CEO</option>
-                <option>COO</option>
-                <option>VP Operations</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="size">Company size?</label>
-              <select class="select" id="size" name="company_size" required>
-                <option value="" disabled selected>Select size</option>
-                <option>50–200</option>
-                <option>200–500</option>
-                <option>500–1000</option>
-                <option>1000+</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label for="chal">Tell us about your biggest operational challenge.</label>
-            <textarea class="textarea" id="chal" name="message" placeholder="e.g. We can't see where work is getting stuck across our three sites, and improvement projects stall after the first month."></textarea>
-          </div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Request demo</button>
-        </form>
-      </div>
-
-      <div class="form-card hidden" id="successCard">
-        <div class="success">
-          <div class="check">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h2>Request received.</h2>
-          <p>Thanks for reaching out. A member of our team will email you within one business day to confirm your 30-minute demo.</p>
-          <a href="/" class="btn btn-secondary success-back">Back to home</a>
         </div>
+        <div class="field">
+          <label for="co">Company</label>
+          <input class="input" id="co" name="company" type="text" placeholder="Acme Inc" required />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="em">Work email</label>
+            <input class="input" id="em" name="email" type="email" placeholder="john@example.com" required />
+          </div>
+          <div class="field">
+            <label for="ph">Phone</label>
+            <input class="input" id="ph" name="phone" type="tel" placeholder="(555) 123-4567" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="role">What's your role?</label>
+            <select class="select" id="role" name="jobtitle" required>
+              <option value="" disabled selected>Select your role</option>
+              <option>CEO</option>
+              <option>COO</option>
+              <option>VP Operations</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="size">Company size?</label>
+            <select class="select" id="size" name="company_size" required>
+              <option value="" disabled selected>Select size</option>
+              <option>50–200</option>
+              <option>200–500</option>
+              <option>500–1000</option>
+              <option>1000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="chal">Tell us about your biggest operational challenge.</label>
+          <textarea class="textarea" id="chal" name="message" placeholder="e.g. We can't see where work is getting stuck across our three sites, and improvement projects stall after the first month."></textarea>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Request demo</button>
+      </form>
+    </div>
+
+    <div class="form-card hidden" id="successCard">
+      <div class="success">
+        <div class="check">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Request received.</h2>
+        <p>Thanks for reaching out. A member of our team will email you within one business day to confirm your 30-minute demo.</p>
+        <a href="/" class="btn btn-secondary success-back">Back to home</a>
       </div>
     </div>
 
-    <!-- Calendar aside -->
-    <aside class="aside">
-      <div class="cal-card">
-        <div class="cal-title">Or pick a time that works.</div>
-        <p class="muted cal-sub">Choose a day and we'll show open slots.</p>
-        <div class="cal-head">
-          <span class="m">June 2026</span>
-          <span class="nav-btns">
-            <button aria-label="Previous month"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-            <button aria-label="Next month"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-          </span>
-        </div>
-        <div class="cal-grid">
-          <div class="dow">S</div><div class="dow">M</div><div class="dow">T</div><div class="dow">W</div><div class="dow">T</div><div class="dow">F</div><div class="dow">S</div>
-          <div class="day muted">31</div>
-          <div class="day avail">1</div><div class="day avail">2</div><div class="day sel">3</div><div class="day avail">4</div><div class="day avail">5</div><div class="day muted">6</div>
-          <div class="day muted">7</div><div class="day avail">8</div><div class="day avail">9</div><div class="day avail">10</div><div class="day avail">11</div><div class="day avail">12</div><div class="day muted">13</div>
-          <div class="day muted">14</div><div class="day avail">15</div><div class="day avail">16</div><div class="day avail">17</div><div class="day avail">18</div><div class="day avail">19</div><div class="day muted">20</div>
-          <div class="day muted">21</div><div class="day avail">22</div><div class="day avail">23</div><div class="day avail">24</div><div class="day avail">25</div><div class="day avail">26</div><div class="day muted">27</div>
-          <div class="day muted">28</div><div class="day avail">29</div><div class="day avail">30</div><div class="day muted">1</div><div class="day muted">2</div><div class="day muted">3</div><div class="day muted">4</div>
-        </div>
-        <div class="slots">
-          <span class="slot">9:00 AM</span>
-          <span class="slot">11:30 AM</span>
-          <span class="slot">1:00 PM</span>
-          <span class="slot dim">2:30 PM</span>
-          <span class="slot dim">4:00 PM</span>
-        </div>
-        <p class="cal-note">Calendar shown for preview. Submit the form and we'll confirm your time.</p>
-      </div>
-
-      <div class="assure">
-        <h3>What to expect</h3>
-        <ul>
-          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>A focused 30-minute walkthrough</li>
-          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Tailored to your operation, not a canned tour</li>
-          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Zero pressure, no commitment required</li>
-        </ul>
-      </div>
-    </aside>
+    <!-- What to expect -->
+    <div class="assure">
+      <h3>What to expect</h3>
+      <ul>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>A focused 30-minute walkthrough</li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Tailored to your operation, not a canned tour</li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Zero pressure, no commitment required</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -138,15 +105,6 @@ import Layout from '../layouts/Layout.astro';
 <script>
   import { wireHubspotForm } from '../scripts/hubspotForm';
   wireHubspotForm({ formId: 'demoForm', cardId: 'formCard', successId: 'successCard', which: 'demo' });
-
-  // The calendar is a static visual placeholder, not a booking widget.
-  // Clicking an available day just moves the highlight.
-  document.querySelectorAll<HTMLElement>('.cal-grid .day.avail').forEach((d) => {
-    d.addEventListener('click', () => {
-      document.querySelectorAll('.cal-grid .day.sel').forEach((s) => { s.classList.remove('sel'); s.classList.add('avail'); });
-      d.classList.add('sel'); d.classList.remove('avail');
-    });
-  });
 </script>
 
 <style>
@@ -155,37 +113,14 @@ import Layout from '../layouts/Layout.astro';
   .demo-hero h1 { margin: var(--space-14) 0 var(--space-16); }
   .demo-hero .lead { margin-inline: auto; }
 
-  .demo-grid {
-    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: var(--space-40); align-items: start;
+  .demo-col {
+    max-width: 640px; margin-inline: auto; display: grid; gap: var(--space-32);
   }
   .form-card {
     background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--r-xl);
     padding: var(--pad-form-card); box-shadow: var(--shadow-md);
   }
   .form-card h2 { font-size: var(--fs-132); margin-bottom: var(--space-22); }
-
-  /* Calendar placeholder */
-  .aside { display: grid; gap: var(--space-24); position: sticky; top: 96px; }
-  .cal-card { background: var(--color-bg-neutral); border: 1px solid var(--color-border); border-radius: var(--r-lg); padding: var(--space-26); }
-  .cal-title { font-weight: var(--fw-bold); margin-bottom: var(--space-4); }
-  .cal-sub { font-size: var(--fs-088); margin-bottom: var(--space-18); }
-  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-18); }
-  .cal-head .m { font-weight: var(--fw-bold); }
-  .cal-head .nav-btns { display: flex; gap: var(--space-6); }
-  .cal-head button { width: 30px; height: 30px; border-radius: var(--r-sm); border: 1px solid var(--color-border); background: var(--color-white); color: var(--color-text-muted); display: grid; place-items: center; }
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-6); }
-  .cal-grid .dow { font-size: var(--fs-072); font-weight: var(--fw-bold); color: var(--color-text-muted); text-align: center; padding-bottom: var(--space-4); text-transform: uppercase; letter-spacing: var(--ls-wide-4); }
-  .cal-grid .day {
-    aspect-ratio: 1; display: grid; place-items: center;
-    font-size: var(--fs-090); border-radius: var(--r-sm); color: var(--color-text); font-weight: var(--fw-semibold);
-  }
-  .cal-grid .day.muted { color: var(--color-slate-300); }
-  .cal-grid .day.avail { background: var(--color-white); border: 1px solid var(--color-border); color: var(--color-accent); cursor: pointer; }
-  .cal-grid .day.sel { background: var(--color-accent); color: var(--color-white); border-color: var(--color-accent); }
-  .cal-note { font-size: var(--fs-082); color: var(--color-text-muted); margin-top: var(--space-16); text-align: center; }
-  .slots { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-18); }
-  .slot { padding: var(--space-8) var(--space-14); border-radius: var(--r-sm); border: 1px solid var(--color-slate-300); background: var(--color-white); font-size: var(--fs-088); font-weight: var(--fw-semibold); color: var(--color-text); }
-  .slot.dim { color: var(--color-slate-400); }
 
   .assure { display: grid; gap: var(--space-12); }
   .assure li { display: flex; gap: var(--space-11); align-items: flex-start; color: var(--color-text-muted); font-size: var(--fs-095); list-style: none; }
@@ -198,9 +133,4 @@ import Layout from '../layouts/Layout.astro';
   .success h2 { margin-bottom: var(--space-10); }
   .success p { color: var(--color-text-muted); max-width: 40ch; margin-inline: auto; }
   .success-back { margin-top: var(--space-24); }
-
-  @media (max-width: 900px) {
-    .demo-grid { grid-template-columns: 1fr; }
-    .aside { position: static; }
-  }
 </style>

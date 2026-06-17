@@ -226,6 +226,7 @@ p  { margin: 0; }
 }
 .textarea { resize: vertical; min-height: 120px; line-height: var(--lh-input); }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); }
+.form-error { color: var(--color-error); font-size: var(--fs-088); font-weight: var(--fw-semibold); margin-top: var(--space-14); }
 
 /* ---------- Utility ---------- */
 .center { text-align: center; }
