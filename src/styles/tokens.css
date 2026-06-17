@@ -39,6 +39,7 @@
   --color-bg-neutral:  #FAF5E7;  /* cards and alt sections, warm cream */
   --color-bg:          #ffffff;  /* page background */
   --color-white:       #ffffff;  /* solid white on colored surfaces */
+  --color-error:       #C0392B;  /* inline form submission errors */
 
   /* ---------- Color: overlays on dark surfaces ---------- */
   --color-overlay-05:     rgba(255, 255, 255, 0.05);

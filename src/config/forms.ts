@@ -1,27 +1,20 @@
 // HubSpot form configuration.
 //
-// Replace the "TBD" placeholders with the real HubSpot portal ID and form
-// GUIDs to wire the white paper and demo forms to HubSpot. While any value
-// below is still "TBD", the forms intercept their submit and show the
-// success state instead of calling the API, so the site demos cleanly
-// before HubSpot is connected.
-
-export const PLACEHOLDER = 'TBD';
+// The white paper and demo forms are wired to HubSpot using the portal ID,
+// region, and form GUIDs below. The shared client handler posts the existing
+// form fields to the HubSpot Forms submission API for the matching region and
+// then shows each form's designed success state.
 
 export interface FormsConfig {
   hubspotPortalId: string;
+  hubspotRegion: string;
   whitepaperFormGuid: string;
   demoFormGuid: string;
 }
 
 export const forms: FormsConfig = {
-  hubspotPortalId: PLACEHOLDER,
-  whitepaperFormGuid: PLACEHOLDER,
-  demoFormGuid: PLACEHOLDER,
+  hubspotPortalId: '244843197',
+  hubspotRegion: 'na2',
+  whitepaperFormGuid: '380a277f-bf21-4cd0-9df2-2a8bbc8dee8e',
+  demoFormGuid: '94a9e515-5700-4571-a7b5-b1b039867bfb',
 };
-
-// A form is wired only when the portal ID and that form's GUID are both set
-// to something other than the placeholder.
-export function isFormConfigured(portalId: string, formGuid: string): boolean {
-  return portalId !== PLACEHOLDER && formGuid !== PLACEHOLDER;
-}
