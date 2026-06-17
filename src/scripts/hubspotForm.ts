@@ -4,7 +4,7 @@
 // API for the configured region and portal, then shows each form's designed
 // success state. On a failed submit it shows a simple inline error and keeps
 // the visitor's input intact so they can try again.
-import { forms } from '../config/forms';
+import { forms, demoFieldMap } from '../config/forms';
 
 interface WireOptions {
   formId: string;
@@ -13,24 +13,31 @@ interface WireOptions {
   which: 'whitepaper' | 'demo';
 }
 
-function collectFields(form: HTMLFormElement): { name: string; value: string }[] {
+function collectFields(
+  form: HTMLFormElement,
+  fieldMap: Record<string, string>,
+): { name: string; value: string }[] {
   const fields: { name: string; value: string }[] = [];
   const controls = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[name]');
   controls.forEach((control) => {
     if (control.value) {
-      fields.push({ name: control.name, value: control.value });
+      fields.push({ name: fieldMap[control.name] ?? control.name, value: control.value });
     }
   });
   return fields;
 }
 
-async function postToHubspot(formGuid: string, form: HTMLFormElement): Promise<void> {
+async function postToHubspot(
+  formGuid: string,
+  form: HTMLFormElement,
+  fieldMap: Record<string, string>,
+): Promise<void> {
   const endpoint = `https://api-${forms.hubspotRegion}.hsforms.com/submissions/v3/integration/submit/${forms.hubspotPortalId}/${formGuid}`;
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      fields: collectFields(form),
+      fields: collectFields(form, fieldMap),
       context: {
         pageUri: window.location.href,
         pageName: document.title,
@@ -49,6 +56,7 @@ export function wireHubspotForm(opts: WireOptions): void {
   if (!form || !card || !success) return;
 
   const formGuid = opts.which === 'whitepaper' ? forms.whitepaperFormGuid : forms.demoFormGuid;
+  const fieldMap = opts.which === 'demo' ? demoFieldMap : {};
 
   // Inline error notice, created here so the page markup stays untouched.
   const error = document.createElement('p');
@@ -73,7 +81,7 @@ export function wireHubspotForm(opts: WireOptions): void {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      await postToHubspot(formGuid, form);
+      await postToHubspot(formGuid, form, fieldMap);
       showSuccess();
     } catch (err) {
       // Keep the visitor's input and surface a simple inline error.

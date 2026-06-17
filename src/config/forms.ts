@@ -18,3 +18,13 @@ export const forms: FormsConfig = {
   whitepaperFormGuid: '380a277f-bf21-4cd0-9df2-2a8bbc8dee8e',
   demoFormGuid: '94a9e515-5700-4571-a7b5-b1b039867bfb',
 };
+
+// Maps the demo form's control name attributes to HubSpot custom property
+// internal names for the payload. Standard properties (firstname, lastname,
+// company, email, phone) are sent unchanged and are not listed here.
+export const demoFieldMap: Record<string, string> = {
+  jobtitle: 'role',
+  company_size: 'company_size',
+  message: 'biggest_operational_challenge',
+};
+
