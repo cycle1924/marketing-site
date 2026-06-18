@@ -24,7 +24,6 @@ export const forms: FormsConfig = {
 // company, email, phone) are sent unchanged and are not listed here.
 export const demoFieldMap: Record<string, string> = {
   jobtitle: 'role',
-  company_size: 'company_size',
   message: 'biggest_operational_challenge',
 };
 
