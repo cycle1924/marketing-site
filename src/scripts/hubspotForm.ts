@@ -39,10 +39,11 @@ export function wireHubspotForm(opts: WireOptions): void {
   const fieldMap = opts.which === 'demo' ? demoFieldMap : {};
 
   // Inline error notice, created here so the page markup stays untouched.
+  // The contact address comes from config so it is never hardcoded in the form.
   const error = document.createElement('p');
   error.className = 'form-error hidden';
   error.setAttribute('role', 'alert');
-  error.textContent = 'Something went wrong sending your details. Please try again.';
+  error.textContent = `Something went wrong sending your request. Please try again. If it keeps happening, email us at ${forms.contactEmail}.`;
   form.appendChild(error);
 
   const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
