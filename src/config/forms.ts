@@ -10,6 +10,7 @@ export interface FormsConfig {
   hubspotRegion: string;
   whitepaperFormGuid: string;
   demoFormGuid: string;
+  contactEmail: string;
 }
 
 export const forms: FormsConfig = {
@@ -17,6 +18,8 @@ export const forms: FormsConfig = {
   hubspotRegion: 'na2',
   whitepaperFormGuid: '380a277f-bf21-4cd0-9df2-2a8bbc8dee8e',
   demoFormGuid: '94a9e515-5700-4571-a7b5-b1b039867bfb',
+  // Prospect-facing fallback address shown when a form submission fails.
+  contactEmail: 'joy@peelbusinessdesign.com',
 };
 
 // Maps the demo form's control name attributes to HubSpot custom property
