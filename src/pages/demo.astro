@@ -70,6 +70,16 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div class="field">
+          <label for="industry">Industry</label>
+          <select class="select" id="industry" name="prospect_industry" required>
+            <option value="" disabled selected>Select your industry</option>
+            <option>Manufacturing</option>
+            <option>Insurance</option>
+            <option>Consulting</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
           <label for="chal">Tell us about your biggest operational challenge.</label>
           <textarea class="textarea" id="chal" name="message" placeholder="e.g. We can't see where work is getting stuck across our three sites, and improvement projects stall after the first month."></textarea>
         </div>

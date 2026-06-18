@@ -5,6 +5,7 @@
 import '../styles/tokens.css';
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
+import { forms } from '../config/forms';
 
 interface Props {
   title: string;
@@ -12,6 +13,11 @@ interface Props {
   active?: 'pricing' | 'whitepaper' | 'demo';
 }
 const { title, description, active }: Props = Astro.props;
+
+// HubSpot tracking loader, sourced from config so the portal ID and region
+// stay in one place. This sets the hubspotutk cookie in the visitor browser
+// and enables HubSpot analytics across every page.
+const hubspotLoaderSrc = `https://js-${forms.hubspotRegion}.hs-scripts.com/${forms.hubspotPortalId}.js`;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +29,8 @@ const { title, description, active }: Props = Astro.props;
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- HubSpot tracking loader: sets the hubspotutk cookie and enables analytics site-wide. -->
+  <script type="text/javascript" id="hs-script-loader" async defer src={hubspotLoaderSrc}></script>
 </head>
 <body>
 
