@@ -47,27 +47,25 @@ import Layout from '../layouts/Layout.astro';
             <input class="input" id="ph" name="phone" type="tel" placeholder="(555) 123-4567" />
           </div>
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="role">What's your role?</label>
-            <select class="select" id="role" name="jobtitle" required>
-              <option value="" disabled selected>Select your role</option>
-              <option>CEO</option>
-              <option>COO</option>
-              <option>VP Operations</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="size">Company size?</label>
-            <select class="select" id="size" name="company_size" required>
-              <option value="" disabled selected>Select size</option>
-              <option>50–200</option>
-              <option>200–500</option>
-              <option>500–1000</option>
-              <option>1000+</option>
-            </select>
-          </div>
+        <div class="field">
+          <label for="role">What's your role?</label>
+          <select class="select" id="role" name="jobtitle" required>
+            <option value="" disabled selected>Select your role</option>
+            <option>CEO</option>
+            <option>COO</option>
+            <option>VP Operations</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="industry">Industry</label>
+          <select class="select" id="industry" name="prospect_industry" required>
+            <option value="" disabled selected>Select your industry</option>
+            <option>Manufacturing</option>
+            <option>Insurance</option>
+            <option>Consulting</option>
+            <option>Other</option>
+          </select>
         </div>
         <div class="field">
           <label for="chal">Tell us about your biggest operational challenge.</label>

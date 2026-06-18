@@ -1,10 +1,12 @@
 // Client-side form wiring shared by the white paper and demo pages.
 //
-// The handler posts the existing form fields to the HubSpot Forms submission
-// API for the configured region and portal, then shows each form's designed
-// success state. On a failed submit it shows a simple inline error and keeps
-// the visitor's input intact so they can try again.
+// The handler collects the existing form fields and hands them to the shared
+// HubSpot submit helper, which adds the tracking context and posts to the
+// Forms submission API, then shows each form's designed success state. On a
+// failed submit it shows a simple inline error and keeps the visitor's input
+// intact so they can try again.
 import { forms, demoFieldMap } from '../config/forms';
+import { submitHubspotForm } from '../lib/hubspot';
 
 interface WireOptions {
   formId: string;
@@ -25,28 +27,6 @@ function collectFields(
     }
   });
   return fields;
-}
-
-async function postToHubspot(
-  formGuid: string,
-  form: HTMLFormElement,
-  fieldMap: Record<string, string>,
-): Promise<void> {
-  const endpoint = `https://api-${forms.hubspotRegion}.hsforms.com/submissions/v3/integration/submit/${forms.hubspotPortalId}/${formGuid}`;
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      fields: collectFields(form, fieldMap),
-      context: {
-        pageUri: window.location.href,
-        pageName: document.title,
-      },
-    }),
-  });
-  if (!response.ok) {
-    throw new Error(`HubSpot submission failed with status ${response.status}`);
-  }
 }
 
 export function wireHubspotForm(opts: WireOptions): void {
@@ -81,7 +61,7 @@ export function wireHubspotForm(opts: WireOptions): void {
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      await postToHubspot(formGuid, form, fieldMap);
+      await submitHubspotForm(formGuid, collectFields(form, fieldMap));
       showSuccess();
     } catch (err) {
       // Keep the visitor's input and surface a simple inline error.
