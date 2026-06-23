@@ -1,4 +1,4 @@
-// Client-side form wiring shared by the white paper and demo pages.
+// Client-side form wiring shared by the white paper, demo, and contact pages.
 //
 // The handler collects the existing form fields and hands them to the shared
 // HubSpot submit helper, which adds the tracking context and posts to the
@@ -12,8 +12,15 @@ interface WireOptions {
   formId: string;
   cardId: string;
   successId: string;
-  which: 'whitepaper' | 'demo';
+  which: 'whitepaper' | 'demo' | 'contact';
 }
+
+// Resolves the HubSpot form GUID for the page from config, never hardcoded.
+const formGuidFor: Record<WireOptions['which'], string> = {
+  whitepaper: forms.whitepaperFormGuid,
+  demo: forms.demoFormGuid,
+  contact: forms.contactFormGuid,
+};
 
 function collectFields(
   form: HTMLFormElement,
@@ -35,7 +42,7 @@ export function wireHubspotForm(opts: WireOptions): void {
   const success = document.getElementById(opts.successId);
   if (!form || !card || !success) return;
 
-  const formGuid = opts.which === 'whitepaper' ? forms.whitepaperFormGuid : forms.demoFormGuid;
+  const formGuid = formGuidFor[opts.which];
   const fieldMap = opts.which === 'demo' ? demoFieldMap : {};
 
   // Inline error notice, created here so the page markup stays untouched.
