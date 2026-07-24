@@ -6,9 +6,9 @@ import Layout from '../layouts/Layout.astro';
 type Cell =
   | { kind: 'price'; amount: string; per: string }
   | { kind: 'priceText'; text: string }
-  | { kind: 'tbd' }
+  | { kind: 'text'; text: string }
   | { kind: 'included' }
-  | { kind: 'custom' };
+  | { kind: 'absent' };
 
 interface Tier {
   name: string;
@@ -19,7 +19,6 @@ interface Tier {
 
 interface Row {
   label: string;
-  italic?: boolean;
   isPrice?: boolean;
   cells: Cell[];
 }
@@ -36,15 +35,17 @@ const rows: Row[] = [
     { kind: 'price', amount: '$72K', per: '/yr' },
     { kind: 'priceText', text: 'Contact sales' },
   ] },
-  { label: 'Lifecycles included', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'custom' }] },
-  { label: 'Users', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'custom' }] },
+  { label: 'Lifecycles included', cells: [{ kind: 'text', text: '1' }, { kind: 'text', text: 'Up to 3' }, { kind: 'text', text: 'Custom' }] },
+  { label: 'Users', cells: [{ kind: 'text', text: '3' }, { kind: 'text', text: '8' }, { kind: 'text', text: 'Unlimited' }] },
   { label: 'All seven signal types', cells: [{ kind: 'included' }, { kind: 'included' }, { kind: 'included' }] },
-  { label: 'AI-guided root cause analysis', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
-  { label: 'Data source connections', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
-  { label: 'Reporting and dashboards', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
-  { label: 'Support level', cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
-  { label: 'Feature to be defined', italic: true, cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
-  { label: 'Feature to be defined', italic: true, cells: [{ kind: 'tbd' }, { kind: 'tbd' }, { kind: 'tbd' }] },
+  { label: 'AI-guided root cause analysis', cells: [{ kind: 'text', text: 'You ask, AI investigates' }, { kind: 'text', text: 'AI investigates automatically' }, { kind: 'text', text: 'AI investigates automatically' }] },
+  { label: 'Data source connections', cells: [{ kind: 'text', text: '3' }, { kind: 'text', text: '9' }, { kind: 'text', text: 'Unlimited' }] },
+  { label: 'Reporting and dashboards', cells: [{ kind: 'included' }, { kind: 'included' }, { kind: 'included' }] },
+  { label: 'Support level', cells: [{ kind: 'text', text: 'Email support' }, { kind: 'text', text: 'Priority support' }, { kind: 'text', text: 'Dedicated contact' }] },
+  { label: 'All your lifecycles in one view', cells: [{ kind: 'absent' }, { kind: 'included' }, { kind: 'included' }] },
+  { label: 'Complete history of every change', cells: [{ kind: 'absent' }, { kind: 'included' }, { kind: 'included' }] },
+  { label: 'Export all your data anytime', cells: [{ kind: 'absent' }, { kind: 'absent' }, { kind: 'included' }] },
+  { label: 'Sign in with your company login (SSO)', cells: [{ kind: 'absent' }, { kind: 'absent' }, { kind: 'included' }] },
 ];
 
 const faqs = [
@@ -87,15 +88,15 @@ const faqs = [
       <tbody>
         {rows.map((row) => (
           <tr class={row.isPrice ? 'row-price' : undefined}>
-            <th class="rowlabel">
-              {row.italic ? <span class="muted feature-tbd">{row.label}</span> : row.label}
-            </th>
+            <th class="rowlabel">{row.label}</th>
             {row.cells.map((cell, i) => (
               <td class={tiers[i].highlight ? 'col-std' : undefined}>
                 {cell.kind === 'price' && <span class="cell-price">{cell.amount}<span class="per">{cell.per}</span></span>}
                 {cell.kind === 'priceText' && <span class="cell-price">{cell.text}</span>}
-                {cell.kind === 'tbd' && <span class="cell-tbd">TBD</span>}
-                {cell.kind === 'custom' && <span class="cell-custom">Custom</span>}
+                {cell.kind === 'text' && <span class="cell-text">{cell.text}</span>}
+                {cell.kind === 'absent' && (
+                  <span class="cell-absent"><span aria-hidden="true">&ndash;</span><span class="visually-hidden">Not included</span></span>
+                )}
                 {cell.kind === 'included' && (
                   <span class="cell-inc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Included</span>
                 )}
@@ -188,13 +189,16 @@ const faqs = [
     font-size: var(--fs-068); font-weight: var(--fw-bold); letter-spacing: var(--ls-wide-3); text-transform: uppercase;
     padding: var(--space-4) var(--space-11); border-radius: var(--r-pill);
   }
-  .feature-tbd { font-style: italic; }
   .row-price td, .row-price th { padding-top: var(--space-18); padding-bottom: var(--space-18); }
   .cell-price { font-size: var(--fs-118); font-weight: var(--fw-extrabold); letter-spacing: var(--ls-tight-2); color: var(--color-text); }
   .cell-price .per { font-size: var(--fs-084); font-weight: var(--fw-semibold); color: var(--color-text-muted); }
   .cell-inc { color: var(--color-accent); font-weight: var(--fw-bold); display: inline-flex; align-items: center; gap: var(--space-7); }
-  .cell-custom { font-weight: var(--fw-bold); color: var(--color-text); }
-  .cell-tbd { color: var(--color-slate-400); font-weight: var(--fw-semibold); font-size: var(--fs-086); letter-spacing: var(--ls-wide-6); }
+  .cell-text { color: var(--color-text); }
+  .cell-absent { color: var(--color-slate-400); font-weight: var(--fw-semibold); }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
   .compare tfoot td { padding-top: var(--space-22); padding-bottom: var(--space-24); }
   .compare tfoot .btn { min-width: 150px; }
 
