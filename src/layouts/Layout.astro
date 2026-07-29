@@ -43,6 +43,9 @@ const hubspotLoaderSrc = `https://js-${forms.hubspotRegion}.hs-scripts.com/${for
         <a href="/pricing" class={active === 'pricing' ? 'active' : undefined}>Pricing</a>
         <a href="/whitepaper" class={active === 'whitepaper' ? 'active' : undefined}>White paper</a>
         <a href="/demo" class={active === 'demo' ? 'active' : undefined}>Demo</a>
+        <!-- Sits inside nav-links so it inherits the plain nav link styling. Book
+             a demo stays the only loud action, so this must not be a button. -->
+        <a href="https://app.peelforward.com">Log in</a>
       </div>
       <div class="nav-spacer"></div>
       <div class="nav-cta">
