@@ -150,8 +150,7 @@ const faqs = [
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
     </span>
     <div>
-      <h3>Implementation: included in every deployment.</h3>
-      <p>Every PeelForward deployment includes hands-on implementation by a certified consultant, scoped to your operation and quoted separately from your subscription. Delivered remotely, on-site travel billed at cost.</p>
+      <p><strong class="lead-in">Implementation: included in every deployment.</strong> Every PeelForward deployment includes hands-on implementation by a certified consultant, scoped to your operation and quoted separately from your subscription. Delivered remotely, on-site travel billed at cost.</p>
     </div>
   </div>
 </section>
@@ -282,7 +281,8 @@ const faqs = [
     background: var(--color-accent-soft); color: var(--color-accent);
     display: grid; place-items: center;
   }
-  .impl-note h3 { font-size: var(--fs-108); margin-bottom: var(--space-6); }
+  /* Bold inline lead-in opening the single implementation paragraph. */
+  .impl-note .lead-in { color: var(--color-text); font-weight: var(--fw-bold); }
   .impl-note p { color: var(--color-text-muted); max-width: 74ch; }
   @media (max-width: 560px) { .impl-note { flex-direction: column; gap: var(--space-14); } }
 
