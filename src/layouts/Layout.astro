@@ -18,6 +18,36 @@ const { title, description, active }: Props = Astro.props;
 // stay in one place. This sets the hubspotutk cookie in the visitor browser
 // and enables HubSpot analytics across every page.
 const hubspotLoaderSrc = `https://js-${forms.hubspotRegion}.hs-scripts.com/${forms.hubspotPortalId}.js`;
+
+// Self-referencing canonical derived from the page's own path against the
+// site URL in astro.config.mjs, so new pages inherit it with no per-page
+// wiring. og:url mirrors it below.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+const ogImage = 'https://www.peelforward.com/og-image.png';
+
+// Organization and WebSite structured data, one block on every page. The
+// WebSite publisher references the Organization node by id.
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://www.peelforward.com/#organization',
+      name: 'PeelForward',
+      url: 'https://www.peelforward.com',
+      logo: 'https://www.peelforward.com/icon-512.png',
+      parentOrganization: { '@type': 'Organization', name: 'Peel Business Design' },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.peelforward.com/#website',
+      name: 'PeelForward',
+      url: 'https://www.peelforward.com',
+      publisher: { '@id': 'https://www.peelforward.com/#organization' },
+    },
+  ],
+};
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +56,28 @@ const hubspotLoaderSrc = `https://js-${forms.hubspotRegion}.hs-scripts.com/${for
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <!-- Icon order matters: browsers pick the last supported link, so the SVG
+       must follow the ICO. icon-16 and icon-32 are manifest fallbacks and
+       are deliberately not linked here. -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="PeelForward" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="PeelForward. Put AI where it belongs." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
