@@ -192,6 +192,11 @@ const faqs = [
 
   /* Comparison table */
   .compare-wrap {
+    /* Containing block for the absolutely positioned .visually-hidden labels
+       in the dash cells. Without this the wrapper is static, so those spans
+       resolve against the initial containing block, escape this scroll
+       container unclipped, and drag the whole page sideways on a phone. */
+    position: relative;
     overflow-x: auto;
     border: 1px solid var(--color-border);
     border-radius: var(--r-lg);
