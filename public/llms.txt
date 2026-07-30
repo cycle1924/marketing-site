@@ -1,0 +1,13 @@
+# PeelForward
+
+> PeelForward is a continuous monitoring platform for operational health, built on Peel Signal Theory. It reads the data your systems already capture, gives early warning when a process drifts, and provides verifiable proof when an improvement is real and holds.
+
+PeelForward is a product of Peel Business Design.
+
+## Pages
+
+- [PeelForward: AI readiness for real operations](https://www.peelforward.com/): PeelForward finds the processes where AI genuinely fits, automates those well, and drives measured continuous improvement everywhere else. The decisions stay yours.
+- [PeelForward: Pricing](https://www.peelforward.com/pricing/): Tiers are based on the number of lifecycles you manage in PeelForward. Every tier includes all seven signal types. Implementation services are scoped and quoted separately.
+- [PeelForward: The Peel Signal Theory framework](https://www.peelforward.com/whitepaper/): Download the Peel Signal Theory framework: how seven signal types turn everyday operational data into clear direction. Written for operators, not statisticians.
+- [PeelForward: Book a demo](https://www.peelforward.com/demo/): See PeelForward running on real signals. Thirty minutes, no pressure, no prep required.
+- [PeelForward: Contact us](https://www.peelforward.com/contact/): Questions about PeelForward or Peel Signal Theory? Send us a note and a member of our team will get back to you.
