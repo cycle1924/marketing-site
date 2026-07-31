@@ -10,7 +10,7 @@ import { forms } from '../config/forms';
 interface Props {
   title: string;
   description: string;
-  active?: 'pricing' | 'whitepaper' | 'demo';
+  active?: 'pricing' | 'whitepaper' | 'faq' | 'demo';
 }
 const { title, description, active }: Props = Astro.props;
 
@@ -94,6 +94,7 @@ const structuredData = {
       <div class="nav-links" id="navLinks">
         <a href="/pricing" class={active === 'pricing' ? 'active' : undefined}>Pricing</a>
         <a href="/whitepaper" class={active === 'whitepaper' ? 'active' : undefined}>White paper</a>
+        <a href="/faq" class={active === 'faq' ? 'active' : undefined}>FAQ</a>
         <a href="/demo" class={active === 'demo' ? 'active' : undefined}>Demo</a>
         <!-- Sits inside nav-links so it inherits the plain nav link styling. Book
              a demo stays the only loud action, so this must not be a button. -->

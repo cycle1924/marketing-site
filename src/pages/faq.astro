@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// FAQ page. Copies the details/summary accordion pattern from the pricing
+// page's FAQ section so the two read as one system. Answers are arrays of
+// paragraphs; single-paragraph answers are one-element arrays.
+interface Item {
+  q: string;
+  a: string[];
+  open?: boolean;
+}
+
+interface Group {
+  heading: string;
+  items: Item[];
+}
+
+// Matching the pricing precedent, exactly one item ships open: the first
+// question on the page.
+const groups: Group[] = [
+  {
+    heading: 'What it is',
+    items: [
+      {
+        q: 'What does PeelForward actually do?',
+        a: [
+          'PeelForward is GPS for your business. It watches the operational data your systems already capture, tells you when something is drifting off course before it becomes a problem, and gives you verifiable proof when an improvement is real and holds.',
+          'It does two things a report cannot. It finds the few processes where AI genuinely fits and helps you put it to work there. For everything else, it drives continuous improvement and measures every change against where you started, so you can show the people funding the work exactly what it returned.',
+        ],
+        open: true,
+      },
+      {
+        q: 'How is this different from a dashboard or a BI tool?',
+        a: [
+          'They have one thing in common. Like a BI tool or a dashboard, PeelForward reads from your systems and never writes back to them. Past that, they do different work.',
+          'A BI tool arrives as a blank slate. You design the metrics, and what you get back is only as good as how well you designed them. PeelForward arrives with the method already in it. Your data is measured against the seven signal types of Peel Signal Theory, refined across a century of continuous improvement practice, so you are not starting by inventing what to watch for.',
+          'A dashboard tells you something moved. PeelForward is built to help you find out why. When a process starts drifting, AI-guided root cause analysis walks your team toward the next right question instead of leaving them looking at a red number.',
+          'And PeelForward starts from your outcomes. You define what the operation is trying to achieve, the signals are configured against that, and the platform looks for the patterns in your data that connect the two. A BI tool reports what happened. PeelForward measures your processes against where you said you were going.',
+        ],
+      },
+      {
+        q: 'Do we need continuous improvement experience to use it?',
+        a: [
+          'No. PeelForward is built for teams without CI training. The method is in the platform.',
+        ],
+      },
+    ],
+  },
+  {
+    heading: 'Your data',
+    items: [
+      {
+        q: 'What does PeelForward need from our systems?',
+        a: [
+          'Three things, for each stage of the process you want watched.',
+          'A timestamp, so we know when something happened. An identifier, so we know which unit of work it happened to, whether that is an order, a quote, a batch, or a ticket. And a value or state, which is what it became: a stage reached, a quantity, a pass or fail, a dollar amount.',
+          'Most operations already capture all three. The work is finding where.',
+        ],
+      },
+      {
+        q: 'Does PeelForward write anything back into our systems?',
+        a: [
+          'No. Ingestion is read only. We read from your systems and never write back to them. Access can be scoped to the specific tables, views, or exports you designate.',
+        ],
+      },
+      {
+        q: 'What if we use a system you do not connect to yet?',
+        a: [
+          'Some sources connect today. For the rest, we build the connector as part of implementation, in a working session with the person on your team who knows the data. That session is normal, not an exception.',
+        ],
+      },
+      {
+        q: 'What if part of our process has no data behind it?',
+        a: [
+          'We tell you. During setup we run a coverage audit, going stage by stage to establish what your data can actually see. Stages with no observable data are named honestly and never given invented scores.',
+          'A gap you know about is useful. A score built on nothing is not.',
+        ],
+      },
+      {
+        q: 'How long before we see something useful?',
+        a: [
+          'It depends on how much history your systems hold. PeelForward needs enough data to establish what normal looks like for your operation before it can tell you something has changed. Where your systems hold history, we backfill it, so trusted baselines can arrive in days instead of weeks.',
+        ],
+      },
+    ],
+  },
+  {
+    heading: 'AI, and who decides',
+    items: [
+      {
+        q: 'What does the AI do, and what does it decide?',
+        a: [
+          'The AI proposes. A human accepts. Nothing the AI generates is written to the record without a person explicitly accepting it. That gate is a permanent design rule, not a setting someone can turn off.',
+          'Within that boundary, AI reads signals, investigates root causes, and suggests countermeasures. Every judgment that matters stays with your team, and the platform always shows how it reached a conclusion.',
+        ],
+      },
+      {
+        q: 'Whose AI account does this run on, and how are costs controlled?',
+        a: [
+          'Yours. AI features run under an Anthropic API key you supply, stored encrypted for your workspace, so the AI data flow stays inside your own vendor relationship rather than ours.',
+          'Cost is controlled by design. A rules engine converts proven AI patterns into deterministic checks, so a pattern the AI has already established does not need to be re-reasoned every time it recurs.',
+        ],
+      },
+    ],
+  },
+  {
+    heading: 'Security and control',
+    items: [
+      {
+        q: 'How is our data kept separate from other clients?',
+        a: [
+          'Every client runs in a dedicated database schema. Requests are scoped to that schema from your authenticated session, so no path through the application crosses between clients. Isolation is covered by automated tests that run before every release.',
+        ],
+      },
+      {
+        q: 'Is our data encrypted?',
+        a: [
+          'Yes, in transit and at rest. Connections are TLS enforced with no plain HTTP. Source connection credentials and API keys are stored AES-256 encrypted with per-client encryption keys. Database backups run daily and are encrypted.',
+        ],
+      },
+      {
+        q: 'Can we see who changed what?',
+        a: [
+          'Yes. Every write is recorded to an audit log with the actor, the action, and the before and after state. Signal history is retained so outcomes can be proven later, and deletions preserve history rather than erasing it.',
+        ],
+      },
+    ],
+  },
+];
+---
+<Layout
+  title="PeelForward: FAQ"
+  description="Answers to the questions operations and security teams ask about PeelForward: what data it needs, what happens to it, and who decides."
+  active="faq"
+>
+
+<section class="section container">
+  <div class="faq">
+    <h1>Questions, answered.</h1>
+    {groups.map((group) => (
+      <div class="faq-group">
+        <h2>{group.heading}</h2>
+        {group.items.map((item) => (
+          <details class="faq-item" open={item.open}>
+            <summary class="faq-q">{item.q}
+              <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            </summary>
+            <div class="faq-a">
+              {item.a.map((para) => <p>{para}</p>)}
+            </div>
+          </details>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  /* FAQ accordion, copied from the pricing page's FAQ section so the two
+     pages look like one system. The page heading is an h1 here where
+     pricing uses an h2, and answers may hold several paragraphs. */
+  .faq { max-width: 760px; margin-inline: auto; }
+  .faq h1 { text-align: center; margin-bottom: var(--space-40); }
+  .faq-group h2 {
+    font-size: var(--fs-132); font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-tight-3); line-height: var(--lh-heading);
+    margin-top: var(--space-48); margin-bottom: var(--space-8);
+  }
+  .faq-group:first-of-type h2 { margin-top: 0; }
+  .faq-item { border-bottom: 1px solid var(--color-border); }
+  .faq-q {
+    width: 100%; text-align: left; background: none; border: none;
+    padding: var(--space-24) 0; display: flex; align-items: center; gap: var(--space-16);
+    font-family: inherit; font-size: var(--fs-112); font-weight: var(--fw-bold); color: var(--color-text);
+    letter-spacing: var(--ls-tight-3);
+  }
+  .faq-q .ico { margin-left: auto; flex: none; color: var(--color-accent); transition: transform .25s ease; }
+  .faq-item[open] .faq-q .ico { transform: rotate(45deg); }
+  .faq-a { padding: 0 0 var(--space-24); color: var(--color-text-muted); max-width: 64ch; line-height: var(--lh-copy); }
+  .faq-a p + p { margin-top: var(--space-14); }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>
