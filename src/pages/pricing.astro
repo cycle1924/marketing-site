@@ -45,9 +45,13 @@ const rows: Row[] = [
   { label: 'Sign in with your company login (SSO)', cells: [{ kind: 'absent' }, { kind: 'absent' }, { kind: 'included' }] },
 ];
 
-// One definition, used both as the note under the grid and as the lifecycle
-// FAQ answer, so the two can never drift apart.
-const lifecycleDefinition = 'A lifecycle is a part of your operation whose signals PeelForward monitors.';
+// Two forms of one definition. The note under the grid needs the short form and
+// the lifecycle FAQ answer needs the full one, so the short form is sliced off
+// the full form at its first sentence rather than typed out a second time. An
+// edit to the full form carries into the note automatically and the two cannot
+// drift apart.
+const lifecycleDefinitionFull = 'A lifecycle is the path a unit of work takes through your operation, from start to finish. An order, a quote, a batch, a ticket: whatever moves through stages and comes out the other end.';
+const lifecycleDefinitionShort = lifecycleDefinitionFull.slice(0, lifecycleDefinitionFull.indexOf('.') + 1);
 
 // Capabilities every tier carries, so they are stated once here rather than
 // repeated as an all-Included row in the comparison grid above.
@@ -55,12 +59,12 @@ const includedInEveryTier = [
   'Monitoring across all seven signal types: Drift, Leading, Constraint, Outcome, Gap, Readiness, and Damping',
   'Reporting and dashboards',
   'Human-centered by design: AI proposes, humans accept',
-  'Your data isolated in a dedicated tenant schema',
+  'Your data partitioned within the database, separate from every other client',
   'AI features run on your own Anthropic API key, with a rules engine that converts proven AI patterns into deterministic checks to control AI cost',
 ];
 
 const faqs = [
-  { q: 'What is a lifecycle?', a: lifecycleDefinition, open: true },
+  { q: 'What is a lifecycle?', a: lifecycleDefinitionFull, open: true },
   { q: 'Do we need continuous improvement experience?', a: 'No. PeelForward is built for teams without CI training. The method is in the platform.', open: false },
   { q: 'What systems does it connect to?', a: 'PeelForward connects to the common systems mid-market operations already run on: ERP, MES, spreadsheets, and BI tools among them.', open: false },
   { q: 'How long does implementation take?', a: 'Implementation is scoped to your operation by a certified consultant. Typical timelines will be confirmed during your demo.', open: false },
@@ -130,7 +134,7 @@ const faqs = [
     </table>
   </div>
 
-  <p class="lifecycle-note">{lifecycleDefinition}</p>
+  <p class="lifecycle-note">{lifecycleDefinitionShort}</p>
 
   <div class="every-tier">
     <h3>Included in every tier</h3>

@@ -109,7 +109,7 @@ const groups: Group[] = [
       {
         q: 'How is our data kept separate from other clients?',
         a: [
-          'Every client runs in a dedicated database schema. Requests are scoped to that schema from your authenticated session, so no path through the application crosses between clients. Isolation is covered by automated tests that run before every release.',
+          'Your data is partitioned within the database, separate from every other client. Requests are scoped to your data from your authenticated session, so no path through the application crosses between clients. Isolation is covered by automated tests that run before every release.',
         ],
       },
       {
