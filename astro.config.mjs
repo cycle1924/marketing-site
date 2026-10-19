@@ -7,5 +7,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://www.peelforward.com',
   output: 'static',
-  integrations: [sitemap()],
+  // Short-lived event pages stay out of the sitemap (and carry noindex).
+  integrations: [sitemap({ filter: (page) => !page.includes('/ilc') })],
 });

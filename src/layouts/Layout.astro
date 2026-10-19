@@ -11,8 +11,10 @@ interface Props {
   title: string;
   description: string;
   active?: 'pricing' | 'whitepaper' | 'faq' | 'demo';
+  /** Keep this page out of search results, for short-lived event pages like /ilc. */
+  noindex?: boolean;
 }
-const { title, description, active }: Props = Astro.props;
+const { title, description, active, noindex = false }: Props = Astro.props;
 
 // HubSpot tracking loader, sourced from config so the portal ID and region
 // stay in one place. This sets the hubspotutk cookie in the visitor browser
@@ -64,6 +66,7 @@ const structuredData = {
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="canonical" href={canonicalUrl} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="PeelForward" />
   <meta property="og:title" content={title} />
