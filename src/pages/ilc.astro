@@ -1,0 +1,125 @@
+---
+// Handouts for Jason's session at the Iowa Lean Consortium conference,
+// 22 October 2026. Attendees reach it from a QR code on the slides that
+// points at https://www.peelforward.com/ilc. /ILC redirects here (see
+// public/serve.json), because typed addresses are case sensitive.
+//
+// No form and no email gate: every file downloads directly.
+//
+// To add a handout, drop the file into public/ilc/. This page lists every
+// file in that folder at build time, so there is no list to keep in sync.
+// The link text comes from the file name: dashes and underscores become
+// spaces, and a leading number such as "1-" sets the order and is hidden.
+// While the folder is empty the page says the files are on their way.
+//
+// The page is temporary. It carries noindex and is left out of the sitemap
+// (astro.config.mjs). To take it down, delete this file, public/ilc/ and
+// the /ILC entry in public/serve.json.
+import fs from 'node:fs';
+import path from 'node:path';
+import Layout from '../layouts/Layout.astro';
+
+const dir = path.join(process.cwd(), 'public', 'ilc');
+const kinds: Record<string, string> = {
+  '.pdf': 'PDF',
+  '.csv': 'CSV spreadsheet',
+  '.xlsx': 'Excel spreadsheet',
+  '.xls': 'Excel spreadsheet',
+};
+
+function sizeLabel(bytes: number): string {
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function titleFrom(file: string): string {
+  return path.parse(file).name.replace(/^\d+[-_ ]+/, '').replace(/[-_]+/g, ' ').trim();
+}
+
+const handouts = (fs.existsSync(dir) ? fs.readdirSync(dir) : [])
+  .filter((file) => kinds[path.extname(file).toLowerCase()] !== undefined)
+  .sort((a, b) => a.localeCompare(b, 'en', { numeric: true }))
+  .map((file) => ({
+    href: `/ilc/${encodeURIComponent(file)}`,
+    file,
+    title: titleFrom(file),
+    kind: kinds[path.extname(file).toLowerCase()],
+    size: sizeLabel(fs.statSync(path.join(dir, file)).size),
+  }));
+---
+<Layout
+  title="PeelForward: Iowa Lean Consortium session handouts"
+  description="Handouts and the practice dataset from Jason Greer's session at the Iowa Lean Consortium conference, October 22, 2026."
+  noindex
+>
+
+<section class="ilc-hero">
+  <div class="container">
+    <div class="inner">
+      <span class="eyebrow">Iowa Lean Consortium &middot; Oct 22, 2026</span>
+      <h1>Session handouts.</h1>
+      <p class="lead">Thanks for joining Jason’s session. Everything from today is here to download, including the dataset, so you can try the prompts on your own.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="list-col">
+    {handouts.length === 0 ? (
+      <div class="empty">
+        <h2>Files are on their way.</h2>
+        <p>The handouts will be posted here on the day of the session. Check back soon.</p>
+      </div>
+    ) : (
+      <ul class="handouts">
+        {handouts.map((h) => (
+          <li class="handout">
+            <div class="meta">
+              <span class="name">{h.title}</span>
+              <span class="detail">{h.kind} &middot; {h.size}</span>
+            </div>
+            <a class="btn btn-primary" href={h.href} download={h.file}>Download</a>
+          </li>
+        ))}
+      </ul>
+    )}
+    <p class="note">Questions about the session? <a href="/contact">Get in touch</a>.</p>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  .ilc-hero { background: linear-gradient(180deg, var(--color-white), var(--color-bg-neutral)); border-bottom: 1px solid var(--color-border); }
+  .ilc-hero .inner { text-align: center; max-width: 56ch; margin-inline: auto; padding-block: var(--pad-hero-bottom); }
+  .ilc-hero h1 { margin: var(--space-14) 0 var(--space-16); }
+  .ilc-hero .lead { margin-inline: auto; }
+
+  .list-col { max-width: 640px; margin-inline: auto; }
+  .handouts { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-14); }
+  .handout {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-16);
+    background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--r-xl);
+    padding: var(--space-20) var(--space-24); box-shadow: var(--shadow-sm);
+  }
+  .meta { display: grid; gap: var(--space-4); min-width: 0; }
+  .name { font-weight: 600; font-size: var(--fs-108); overflow-wrap: anywhere; }
+  .detail { color: var(--color-text-muted); font-size: var(--fs-090); }
+  .handout .btn { flex-shrink: 0; }
+
+  .empty {
+    text-align: center; background: var(--color-white); border: 1px solid var(--color-border);
+    border-radius: var(--r-xl); padding: var(--pad-form-card);
+  }
+  .empty h2 { font-size: var(--fs-140); margin-bottom: var(--space-10); }
+  .empty p { color: var(--color-text-muted); }
+
+  /* global.css strips link styling, so the contact link needs its own affordance (LESSONS 2026-10-07). */
+  .note { text-align: center; color: var(--color-text-muted); margin-top: var(--space-32); font-size: var(--fs-096); }
+  .note a { color: var(--color-text); border-bottom: 2px solid var(--color-accent); }
+
+  @media (max-width: 480px) {
+    .handout { flex-direction: column; align-items: stretch; }
+    .handout .btn { width: 100%; }
+  }
+</style>
