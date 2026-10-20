@@ -1,8 +1,8 @@
 ---
 // Handouts for Jason's session at the Iowa Lean Consortium conference,
 // 22 October 2026. Attendees reach it from a QR code on the slides that
-// points at https://www.peelforward.com/ilc. /ILC redirects here (see
-// public/serve.json), because typed addresses are case sensitive.
+// points at https://www.peelforward.com/ilc. /ILC and other casings serve
+// this page too, through a rewrite in public/serve.json.
 //
 // No form and no email gate: every file downloads directly.
 //
@@ -13,8 +13,10 @@
 // While the folder is empty the page says the files are on their way.
 //
 // The page is temporary. It carries noindex and is left out of the sitemap
-// (astro.config.mjs). To take it down, delete this file, public/ilc/ and
-// the /ILC entry in public/serve.json.
+// (astro.config.mjs). To take it down, delete this file, public/ilc/,
+// public/serve.json and the sitemap filter in astro.config.mjs.
+//
+// The slides are posted as a PDF, without speaker notes.
 import fs from 'node:fs';
 import path from 'node:path';
 import Layout from '../layouts/Layout.astro';
@@ -25,6 +27,7 @@ const kinds: Record<string, string> = {
   '.csv': 'CSV spreadsheet',
   '.xlsx': 'Excel spreadsheet',
   '.xls': 'Excel spreadsheet',
+  '.pptx': 'PowerPoint slides',
 };
 
 function sizeLabel(bytes: number): string {
