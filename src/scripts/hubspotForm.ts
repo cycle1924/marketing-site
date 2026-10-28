@@ -22,6 +22,12 @@ const formGuidFor: Record<WireOptions['which'], string> = {
   contact: forms.contactFormGuid,
 };
 
+// Name of the hidden decoy input on each form. A person never sees it, so
+// a value here means a bot filled every field on the page. It is excluded
+// from the payload as well as checked, so the name never has to exist as a
+// HubSpot property.
+const TRAP_FIELD = 'website';
+
 function collectFields(
   form: HTMLFormElement,
   fieldMap: Record<string, string>,
@@ -29,11 +35,18 @@ function collectFields(
   const fields: { name: string; value: string }[] = [];
   const controls = form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[name]');
   controls.forEach((control) => {
+    if (control.name === TRAP_FIELD) return;
     if (control.value) {
       fields.push({ name: fieldMap[control.name] ?? control.name, value: control.value });
     }
   });
   return fields;
+}
+
+// True when the decoy was filled in.
+function looksAutomated(form: HTMLFormElement): boolean {
+  const trap = form.elements.namedItem(TRAP_FIELD);
+  return trap instanceof HTMLInputElement && trap.value.trim() !== '';
 }
 
 export function wireHubspotForm(opts: WireOptions): void {
@@ -64,6 +77,10 @@ export function wireHubspotForm(opts: WireOptions): void {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    // Show a bot the same success state a person gets, and send nothing.
+    // Telling it that it was caught just teaches whoever wrote it to fix it.
+    if (looksAutomated(form)) { showSuccess(); return; }
 
     error.classList.add('hidden');
     if (submitBtn) submitBtn.disabled = true;

@@ -13,8 +13,10 @@
 // While the folder is empty the page says the files are on their way.
 //
 // The page is temporary. It carries noindex and is left out of the sitemap
-// (astro.config.mjs). To take it down, delete this file, public/ilc/,
-// public/serve.json and the sitemap filter in astro.config.mjs.
+// (astro.config.mjs). To take it down, delete this file and public/ilc/,
+// remove the sitemap filter in astro.config.mjs, and remove ONLY the
+// "rewrites" entries from public/serve.json. Do not delete that file: it
+// also carries every security header the whole site sends.
 //
 // The slides are posted as a PDF, without speaker notes.
 import fs from 'node:fs';

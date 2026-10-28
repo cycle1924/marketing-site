@@ -1,0 +1,55 @@
+/* Hanken Grotesk, served from this site rather than from Google.
+
+   The site used to pull this font from fonts.googleapis.com, which handed
+   every visitor's IP address to Google before they had clicked anything and
+   added a third party the cookie notice would have to account for. The five
+   weights below are the Latin subset, about 80KB in total, and they are
+   served from our own origin.
+
+   Files live in public/fonts/ and come from the @fontsource/hanken-grotesk
+   package. To update them, pull that package again and copy the matching
+   latin woff2 files across; do not edit these by hand.
+
+   font-display: swap means text paints immediately in the fallback and
+   reflows when the real font lands, which is the right trade for a marketing
+   page where reading beats a brief flash. */
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/hanken-grotesk-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/hanken-grotesk-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/hanken-grotesk-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/hanken-grotesk-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/hanken-grotesk-latin-800-normal.woff2') format('woff2');
+}

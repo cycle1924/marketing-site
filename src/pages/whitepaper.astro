@@ -52,6 +52,19 @@ import Layout from '../layouts/Layout.astro';
             <label for="em">Work email</label>
             <input class="input" id="em" name="email" type="email" placeholder="john@example.com" required />
           </div>
+{/*
+            Spam trap. A real person never sees or tabs to this field, so
+            anything in it came from a bot filling every input on the page.
+            hubspotForm.ts drops those submissions. It is hidden with CSS
+            rather than type="hidden" because the simplest bots skip hidden
+            inputs, and aria-hidden plus tabindex keep it away from screen
+            readers and the keyboard.
+          */}
+          <div class="field-trap" aria-hidden="true">
+            <label for="website-whitepaper">Website</label>
+            <input type="text" id="website-whitepaper" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
           <button class="btn btn-primary btn-lg btn-block" type="submit">Download framework</button>
           <p class="privacy">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>

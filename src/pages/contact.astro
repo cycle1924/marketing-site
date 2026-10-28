@@ -45,6 +45,19 @@ import Layout from '../layouts/Layout.astro';
           <label for="msg">Message <span class="opt">(optional)</span></label>
           <textarea class="textarea" id="msg" name="message" placeholder="How can we help?"></textarea>
         </div>
+{/*
+          Spam trap. A real person never sees or tabs to this field, so
+          anything in it came from a bot filling every input on the page.
+          hubspotForm.ts drops those submissions. It is hidden with CSS
+          rather than type="hidden" because the simplest bots skip hidden
+          inputs, and aria-hidden plus tabindex keep it away from screen
+          readers and the keyboard.
+        */}
+        <div class="field-trap" aria-hidden="true">
+          <label for="website-contact">Website</label>
+          <input type="text" id="website-contact" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
         <button class="btn btn-primary btn-lg btn-block" type="submit">Send message</button>
       </form>
     </div>

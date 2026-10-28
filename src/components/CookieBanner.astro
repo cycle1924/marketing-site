@@ -1,0 +1,126 @@
+---
+// Cookie consent banner.
+//
+// Rendered on every page but hidden until the script in consent.ts decides
+// whether to show it. It starts hidden rather than visible so a returning
+// visitor who already answered never sees it flash on the way past.
+//
+// Accept and Decline are the same size and the same prominence on purpose.
+// A banner where the accept button is loud and the decline is a grey link is
+// not really asking.
+import { forms } from '../config/forms';
+---
+
+{/*
+  The portal ID and region ride on data attributes rather than an inline
+  script. Astro's define:vars emits an inline <script>, which would force
+  'unsafe-inline' into the Content-Security-Policy in public/serve.json and
+  undo most of what that header is for.
+*/}
+<div
+  class="cookie-banner"
+  id="cookie-banner"
+  role="region"
+  aria-label="Cookie choices"
+  data-portal-id={forms.hubspotPortalId}
+  data-region={forms.hubspotRegion}
+  hidden
+>
+  <div class="cookie-inner">
+    <p class="cookie-copy">
+      We would like to set analytics cookies so we can see which pages people
+      find useful. They are not set unless you say yes, and the site works
+      either way. <a href="/cookies">What these cookies do</a>.
+    </p>
+
+    <div class="cookie-actions">
+      <button class="btn btn-primary cookie-btn" type="button" id="cookie-accept">Accept</button>
+      <button class="btn btn-secondary cookie-btn" type="button" id="cookie-decline">Decline</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { wireConsent } from '../scripts/consent';
+
+  wireConsent();
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 100;
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-20) var(--space-24);
+  }
+
+  /* hidden is an HTML attribute, and the display rules above would otherwise
+     win over the browser default for it. */
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-inner {
+    max-width: 1120px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-24);
+    flex-wrap: wrap;
+  }
+
+  .cookie-copy {
+    margin: 0;
+    flex: 1 1 360px;
+    min-width: 0;
+    font-size: var(--fs-092);
+    color: var(--color-text);
+  }
+
+  /* global.css sets `a { color: inherit; text-decoration: none }`, so this
+     link renders as plain body text with no affordance at all unless it is
+     given one here. Navy text with an orange underline is the pattern used
+     elsewhere on the site; orange body text at this size would be about
+     3.3:1 on white and fail contrast. */
+  .cookie-copy a {
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 1px;
+  }
+
+  .cookie-copy a:hover {
+    color: var(--color-accent-active);
+    border-bottom-color: var(--color-accent-active);
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: var(--space-12);
+    flex-shrink: 0;
+  }
+
+  /* Both buttons carry the same size so neither choice is nudged. */
+  .cookie-btn {
+    min-width: 132px;
+  }
+
+  @media (max-width: 680px) {
+    .cookie-inner {
+      align-items: stretch;
+    }
+
+    .cookie-actions {
+      width: 100%;
+    }
+
+    .cookie-btn {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+</style>

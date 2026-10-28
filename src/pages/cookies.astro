@@ -1,0 +1,206 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { forms } from '../config/forms';
+
+// This page describes what the site actually does, not what a template says
+// a site might do. Every row below was checked against the code: the only
+// third party that can set anything here is HubSpot, and it cannot run at
+// all until someone accepts in the banner.
+//
+// If a new script, embed or analytics tool is ever added to this site, it
+// belongs in this table on the same commit.
+interface CookieRow {
+  name: string;
+  setBy: string;
+  purpose: string;
+  life: string;
+  needsConsent: boolean;
+}
+
+const cookies: CookieRow[] = [
+  {
+    name: 'peel-cookie-consent',
+    setBy: 'This site',
+    purpose:
+      'Remembers whether you accepted or declined. Without it the banner would ask again on every page.',
+    life: 'Until you clear your browser data',
+    needsConsent: false,
+  },
+  {
+    name: 'hubspotutk',
+    setBy: 'HubSpot',
+    purpose:
+      'Gives your browser an anonymous ID, so that if you later request the white paper or book a demo, HubSpot can connect it to the pages you looked at first.',
+    life: 'About 6 months',
+    needsConsent: true,
+  },
+  {
+    name: '__hstc, __hssrc, __hssc',
+    setBy: 'HubSpot',
+    purpose:
+      'Counts visits and sessions so we can see which pages people actually read and which ones they skip.',
+    life: '__hstc about 6 months, __hssc 30 minutes, __hssrc for the browser session',
+    needsConsent: true,
+  },
+];
+---
+<Layout
+  title="PeelForward: Cookies"
+  description="What cookies this site sets, who sets them, what they are for, and how to change your mind."
+>
+
+<section class="section container">
+  <div class="cookie-page">
+    <h1>Cookies</h1>
+    <p class="lead">
+      A short, honest list of what this site stores on your device, and how to
+      change your answer whenever you want.
+    </p>
+
+    <h2>The short version</h2>
+    <p>
+      Nothing that tracks you runs until you accept. If you decline, or simply
+      ignore the banner, the only thing stored is the record of that choice,
+      and every part of this site still works. We do not use advertising
+      cookies, we do not sell anything about you, and there is no third party
+      on these pages other than HubSpot.
+    </p>
+
+    <h2>What gets set</h2>
+
+    <div class="cookie-table-wrap">
+      <table class="cookie-table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Set by</th>
+            <th scope="col">What it is for</th>
+            <th scope="col">How long it lasts</th>
+            <th scope="col">Needs your yes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            cookies.map((cookie) => (
+              <tr>
+                <td><code>{cookie.name}</code></td>
+                <td>{cookie.setBy}</td>
+                <td>{cookie.purpose}</td>
+                <td>{cookie.life}</td>
+                <td>{cookie.needsConsent ? 'Yes' : 'No'}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Changing your mind</h2>
+    <p>
+      Use the <a class="inline-link" href="#" data-cookie-settings>cookie settings</a>
+      control, which also sits at the bottom of every page. Declining after you
+      accepted also clears the HubSpot cookies you picked up in the meantime.
+    </p>
+    <p>
+      You can also clear cookies in your browser settings at any time, which
+      has the same effect and will bring the banner back.
+    </p>
+
+    <h2>The forms on this site</h2>
+    <p>
+      Requesting the white paper, booking a demo or sending us a note all send
+      what you typed to HubSpot, where we read it and reply. That happens
+      whether or not you accepted cookies, because you asked us for something.
+      The difference is that without the cookie there is nothing linking your
+      request to the pages you read beforehand.
+    </p>
+
+    <h2>Questions</h2>
+    <p>
+      Email <a class="inline-link" href={`mailto:${forms.contactEmail}`}>{forms.contactEmail}</a>
+      and a person will answer.
+    </p>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  .cookie-page {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .cookie-page h1 {
+    margin-bottom: var(--space-16);
+  }
+
+  .cookie-page .lead {
+    margin-bottom: var(--space-40);
+  }
+
+  .cookie-page h2 {
+    margin-top: var(--space-40);
+    margin-bottom: var(--space-16);
+  }
+
+  .cookie-page p {
+    margin-bottom: var(--space-16);
+  }
+
+  /* global.css sets `a { color: inherit; text-decoration: none }`, so a bare
+     link in body copy has no affordance at all. Navy text with an orange
+     underline is the pattern used elsewhere on the site; orange body text
+     would be about 3.3:1 on white and fail contrast. */
+  .inline-link {
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 1px;
+    cursor: pointer;
+  }
+
+  .inline-link:hover {
+    color: var(--color-accent-active);
+    border-bottom-color: var(--color-accent-active);
+  }
+
+  /* Five columns that cannot usefully shrink, so the table scrolls inside
+     this wrapper instead of pushing the page wide. position: relative keeps
+     any absolutely positioned descendant anchored inside the scroll
+     container rather than escaping it and setting the page scrollWidth. */
+  .cookie-table-wrap {
+    position: relative;
+    overflow-x: auto;
+    margin-bottom: var(--space-24);
+  }
+
+  .cookie-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    font-size: var(--fs-092);
+  }
+
+  .cookie-table th,
+  .cookie-table td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-12) var(--space-16);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cookie-table th {
+    color: var(--color-text);
+    border-bottom-width: 2px;
+  }
+
+  .cookie-table td {
+    color: var(--color-text-muted);
+  }
+
+  .cookie-table code {
+    color: var(--color-text);
+    font-size: 0.95em;
+    word-break: break-word;
+  }
+</style>
