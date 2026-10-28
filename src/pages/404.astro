@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Astro builds this to dist/404.html, which `serve` returns for any path it
+// cannot match. Before this page existed a mistyped address, or an old link
+// from peelsignaltheory.com, got the hosting tool's bare default with no
+// branding and no way back into the site.
+---
+<Layout
+  title="PeelForward: Page not found"
+  description="That page does not exist. Here is the way back."
+  noindex={true}
+>
+
+<section class="section container">
+  <div class="notfound">
+    <h1>We could not find that page.</h1>
+    <p class="lead">
+      The address may have changed, or the link that brought you here may be
+      out of date.
+    </p>
+
+    <div class="notfound-actions">
+      <a href="/" class="btn btn-primary btn-lg">Go to the home page</a>
+      <a href="/demo" class="btn btn-secondary btn-lg">Book a demo</a>
+    </div>
+
+    <h2>Looking for something in particular?</h2>
+    <ul class="notfound-links">
+      <li><a class="inline-link" href="/pricing">Pricing</a></li>
+      <li><a class="inline-link" href="/whitepaper">The Peel Signal Theory white paper</a></li>
+      <li><a class="inline-link" href="/faq">Questions and answers</a></li>
+      <li><a class="inline-link" href="/contact">Contact us</a></li>
+    </ul>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  .notfound {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .notfound h1 {
+    margin-bottom: var(--space-16);
+  }
+
+  .notfound .lead {
+    margin-bottom: var(--space-32);
+  }
+
+  .notfound-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-16);
+    margin-bottom: var(--space-48);
+  }
+
+  .notfound h2 {
+    margin-bottom: var(--space-16);
+  }
+
+  .notfound-links {
+    margin: 0;
+    padding-left: var(--space-20);
+  }
+
+  .notfound-links li {
+    margin-bottom: var(--space-8);
+  }
+
+  /* global.css sets `a { color: inherit; text-decoration: none }`, so these
+     need their own affordance. Same pattern as the cookies page. */
+  .inline-link {
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 1px;
+  }
+
+  .inline-link:hover {
+    color: var(--color-accent-active);
+    border-bottom-color: var(--color-accent-active);
+  }
+</style>

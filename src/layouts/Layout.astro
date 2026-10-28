@@ -2,9 +2,11 @@
 // Shared layout for every page. Defines the header (logo, nav, book a
 // demo button) and footer exactly once. Pages pass a title, description,
 // and which nav item is active.
+import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 import { forms } from '../config/forms';
 
 interface Props {
@@ -15,11 +17,6 @@ interface Props {
   noindex?: boolean;
 }
 const { title, description, active, noindex = false }: Props = Astro.props;
-
-// HubSpot tracking loader, sourced from config so the portal ID and region
-// stay in one place. This sets the hubspotutk cookie in the visitor browser
-// and enables HubSpot analytics across every page.
-const hubspotLoaderSrc = `https://js-${forms.hubspotRegion}.hs-scripts.com/${forms.hubspotPortalId}.js`;
 
 // Self-referencing canonical derived from the page's own path against the
 // site URL in astro.config.mjs, so new pages inherit it with no per-page
@@ -84,11 +81,16 @@ const structuredData = {
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <!-- HubSpot tracking loader: sets the hubspotutk cookie and enables analytics site-wide. -->
-  <script type="text/javascript" id="hs-script-loader" async defer src={hubspotLoaderSrc}></script>
+  <!-- The font is served from this site, so there is no third-party
+       stylesheet and no preconnect to Google. See src/styles/fonts.css.
+       These two weights carry almost all visible text above the fold, so
+       they are fetched alongside the CSS rather than after it. -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/hanken-grotesk-latin-400-normal.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/hanken-grotesk-latin-800-normal.woff2" crossorigin />
+  <!-- The HubSpot tracking loader is deliberately NOT here. It used to run
+       on every page load, setting its cookies before a visitor had any say.
+       src/scripts/consent.ts injects it, and only after someone accepts in
+       the banner at the end of the body. -->
 </head>
 <body>
 
@@ -146,10 +148,19 @@ const structuredData = {
     </div>
     <div class="footer-bottom">
       <span>© 2026 PeelForward. All rights reserved.</span>
+      <span class="footer-bottom-links">
+        <a href="/cookies">Cookies</a>
+        <!-- Reopens the consent banner. A button, not a link, because it does
+             something rather than going somewhere; consent.ts binds every
+             element carrying data-cookie-settings. -->
+        <button class="footer-settings" type="button" data-cookie-settings>Cookie settings</button>
+      </span>
       <span>Continuous improvement, operationalized.</span>
     </div>
   </div>
 </footer>
+
+<CookieBanner />
 
 <script>
   // Mobile nav toggle
